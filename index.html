@@ -10,14 +10,15 @@
     <div id="game-container">
         <h1>Morpion</h1>
         <div id="mode-selection">
-            <button onclick="setMode('ami')">Mode Ami</button>
+            <button onclick="setMode('ami')">Mode Ami (Local)</button>
+            <button onclick="setMode('multijoueur')">Mode Multijoueur (Lien)</button>
             <button onclick="setMode('facile')">Facile</button>
-            <button onclick="setMode('moyen')">Moyen</button>
-            <button onclick="setMode('difficile')">Difficile</button>
         </div>
         <div id="board"></div>
         <button id="restart-btn" onclick="restartGame()">Recommencer</button>
+        <button id="reset-scores-btn" onclick="resetScores()">Réinitialiser les scores</button>
         <p id="message"></p>
+        <p id="scores">Scores: X - <span id="scoreX">0</span> | O - <span id="scoreO">0</span></p>
     </div>
     <script src="script.js"></script>
 </body>
