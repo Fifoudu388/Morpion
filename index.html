@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morpion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Morpion</h1>
+        <div id="mode-selection">
+            <button onclick="setMode('ami')">Mode Ami</button>
+            <button onclick="setMode('facile')">Facile</button>
+            <button onclick="setMode('moyen')">Moyen</button>
+            <button onclick="setMode('difficile')">Difficile</button>
+        </div>
+        <div id="board"></div>
+        <button id="restart-btn" onclick="restartGame()">Recommencer</button>
+        <p id="message"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
