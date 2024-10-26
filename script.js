@@ -3,16 +3,20 @@ let currentPlayer = 'X';
 let scoreX = 0;
 let scoreO = 0;
 let gameActive = true;
+let mode = 'ami';
+let aiDifficulty = 'facile';
 
 const boardElement = document.getElementById('board');
 const messageElement = document.getElementById('message');
 const scoreXElement = document.getElementById('scoreX');
 const scoreOElement = document.getElementById('scoreO');
+const shareLinkElement = document.getElementById('share-link');
 
 function setMode(selectedMode) {
-    if (selectedMode === 'multijoueur') {
-        // Gérer le mode multijoueur ici
-        alert("Fonctionnalité à implémenter pour le partage de lien.");
+    mode = selectedMode;
+    if (mode === 'multijoueur') {
+        // Charger l'état du jeu à partir de l'URL
+        loadGameState();
     } else {
         startGame();
     }
@@ -35,13 +39,19 @@ function renderBoard() {
         cellElement.onclick = () => handleCellClick(index);
         boardElement.appendChild(cellElement);
     });
+    updateShareLink();
 }
 
 function handleCellClick(index) {
     if (board[index] || !gameActive) return;
     board[index] = currentPlayer;
     checkWinner();
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    if (mode === 'ami' || mode === 'multijoueur') {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    } else {
+        aiMove();
+    }
+    saveGameState();
     renderBoard();
 }
 
@@ -83,6 +93,28 @@ function updateScore(winner) {
     scoreOElement.innerText = scoreO;
 }
 
+function aiMove() {
+    let availableIndices = board.map((cell, index) => cell ? null : index).filter(index => index !== null);
+
+    if (aiDifficulty === 'facile') {
+        const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+        board[randomIndex] = currentPlayer;
+    } else if (aiDifficulty === 'moyen') {
+        // Implémentez une logique AI moyenne ici
+        // Pour l'exemple, on choisit aléatoirement
+        const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+        board[randomIndex] = currentPlayer;
+    } else if (aiDifficulty === 'difficile') {
+        // Implémentez une logique AI difficile ici (Minimax par exemple)
+        // Pour l'exemple, on choisit aléatoirement
+        const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+        board[randomIndex] = currentPlayer;
+    }
+    
+    checkWinner();
+    currentPlayer = 'X'; // Revenir au joueur X
+}
+
 function restartGame() {
     startGame();
 }
@@ -95,5 +127,36 @@ function resetScores() {
     startGame();
 }
 
+function updateShareLink() {
+    const gameState = JSON.stringify({ board, currentPlayer, scoreX, scoreO });
+    const encodedState = btoa(gameState);
+    shareLinkElement.innerHTML = `Partagez ce lien pour jouer : <a href="?state=${encodedState}">${window.location.href.split('?')[0]}?state=${encodedState}</a>`;
+}
+
+function loadGameState() {
+    const params = new URLSearchParams(window.location.search);
+    const state = params.get('state');
+    if (state) {
+        const decodedState = atob(state);
+        const { board: loadedBoard, currentPlayer: loadedPlayer, scoreX: loadedScoreX, scoreO: loadedScoreO } = JSON.parse(decodedState);
+        board = loadedBoard;
+        currentPlayer = loadedPlayer;
+        scoreX = loadedScoreX;
+        scoreO = loadedScoreO;
+        gameActive = true;
+        renderBoard();
+    } else {
+        startGame();
+    }
+}
+
+function saveGameState() {
+    if (mode === 'multijoueur') {
+        const gameState = JSON.stringify({ board, currentPlayer, scoreX, scoreO });
+        const encodedState = btoa(gameState);
+        history.replaceState(null, '', `?state=${encodedState}`);
+    }
+}
+
 // Initialiser le jeu
-startGame();
+loadGameState();
