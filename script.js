@@ -1,14 +1,21 @@
 let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
-let mode = 'ami';
+let scoreX = 0;
+let scoreO = 0;
 let gameActive = true;
 
 const boardElement = document.getElementById('board');
 const messageElement = document.getElementById('message');
+const scoreXElement = document.getElementById('scoreX');
+const scoreOElement = document.getElementById('scoreO');
 
 function setMode(selectedMode) {
-    mode = selectedMode;
-    startGame();
+    if (selectedMode === 'multijoueur') {
+        // Gérer le mode multijoueur ici
+        alert("Fonctionnalité à implémenter pour le partage de lien.");
+    } else {
+        startGame();
+    }
 }
 
 function startGame() {
@@ -35,22 +42,7 @@ function handleCellClick(index) {
     board[index] = currentPlayer;
     checkWinner();
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    if (mode !== 'ami' && currentPlayer === 'O') {
-        aiMove();
-    }
     renderBoard();
-}
-
-function aiMove() {
-    // Logique simple pour l'IA
-    const availableIndices = board.map((cell, index) => cell ? null : index).filter(index => index !== null);
-    if (availableIndices.length > 0) {
-        const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
-        board[randomIndex] = currentPlayer;
-        checkWinner();
-        currentPlayer = 'X'; // Revenir au joueur X
-        renderBoard();
-    }
 }
 
 function checkWinner() {
@@ -69,6 +61,7 @@ function checkWinner() {
         const [a, b, c] = pattern;
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
             messageElement.innerText = `${board[a]} a gagné!`;
+            updateScore(board[a]);
             gameActive = false;
             return;
         }
@@ -80,7 +73,25 @@ function checkWinner() {
     }
 }
 
+function updateScore(winner) {
+    if (winner === 'X') {
+        scoreX++;
+    } else if (winner === 'O') {
+        scoreO++;
+    }
+    scoreXElement.innerText = scoreX;
+    scoreOElement.innerText = scoreO;
+}
+
 function restartGame() {
+    startGame();
+}
+
+function resetScores() {
+    scoreX = 0;
+    scoreO = 0;
+    scoreXElement.innerText = scoreX;
+    scoreOElement.innerText = scoreO;
     startGame();
 }
 
