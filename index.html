@@ -7,22 +7,30 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="game-container">
-        <h1>Morpion</h1>
-        <div id="mode-selection">
-            <button class="mode-btn" onclick="setMode('ami')">Mode Ami (Local)</button>
-            <button class="mode-btn" onclick="setMode('multijoueur')">Mode Multijoueur (Lien)</button>
-            <button class="mode-btn" onclick="setMode('facile')">Facile</button>
-            <button class="mode-btn" onclick="setMode('moyen')">Moyen</button>
-            <button class="mode-btn" onclick="setMode('difficile')">Difficile</button>
-        </div>
-        <div id="board"></div>
-        <button class="action-btn" id="restart-btn" onclick="restartGame()">Recommencer</button>
-        <button class="action-btn" id="reset-scores-btn" onclick="resetScores()">Réinitialiser les scores</button>
-        <p id="message"></p>
-        <p id="scores">Scores: X - <span id="scoreX">0</span> | O - <span id="scoreO">0</span></p>
-        <p id="share-link"></p>
+    <h1>Morpion</h1>
+    
+    <div id="mode-selection">
+        <button onclick="setMode('easy')">Facile</button>
+        <button onclick="setMode('medium')">Moyen</button>
+        <button onclick="setMode('hard')">Difficile</button>
+        <button onclick="setMode('multiplayer-same')">Multijoueur (Même support)</button>
+        <button onclick="setMode('multiplayer-link')">Multijoueur (Partager un lien)</button>
     </div>
+    
+    <div id="game-board">
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+        <div class="cell" data-cell></div>
+    </div>
+    
+    <div id="message"></div>
+    
     <script src="script.js"></script>
 </body>
 </html>
