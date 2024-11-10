@@ -1,30 +1,21 @@
 body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 20px;
 }
 
-#game-container {
-    margin: 0 auto;
-    max-width: 400px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: white;
+#mode-selection button {
+    margin: 5px;
+    padding: 10px 15px;
 }
 
-h1 {
-    color: #333;
-}
-
-#board {
+#game-board {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
     gap: 5px;
-    margin: 20px 0;
+    margin-top: 20px;
 }
 
 .cell {
@@ -33,34 +24,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2em;
-    background-color: #e0e0e0;
+    font-size: 24px;
+    border: 1px solid #333;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.cell:hover {
-    background-color: #d0d0d0;
-}
-
-.mode-btn, .action-btn {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    margin: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.mode-btn:hover, .action-btn:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-#share-link {
-    margin-top: 20px;
-    font-size: 1em;
-    color: #666;
 }
